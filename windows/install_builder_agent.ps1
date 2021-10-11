@@ -16,10 +16,18 @@ RUN apk update --no-cache \
 		zip \
 		bzip2 \
 		git \
+		subversion \
 		patch \
 		binutils \
 		libtool \
 		readline-dev \
+		zlib-dev \
+		bzip2-dev \
+		xz-dev \
+		pcre2 pcre2-dev \
+		curl-dev \
+		texinfo texlive texlive-luatex texlive-xetex \
+		libffi-dev \
 		bison \
 		pkgconf \
 		make \
@@ -38,13 +46,18 @@ RUN apk update --no-cache \
 		groff \
 		markdown \
 		asciidoc \
-		jq
+		jq \
+		sudo
+
+RUN rm /usr/glibc-compat/lib/ld-linux-x86-64.so.2 && /usr/glibc-compat/sbin/ldconfig
 
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk \
     PATH="/usr/lib/jvm/java-11-openjdk/bin:`$PATH"
 
 RUN sed -i '/export PATH=/d' /etc/profile
 RUN echo "export PATH=`${PATH}" >> /etc/profile
+
+RUN usermod -aG sudo jenkins
 
 "@ | Set-Content Dockerfile
 
