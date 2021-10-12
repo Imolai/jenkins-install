@@ -17,15 +17,17 @@ RUN apk update --no-cache \
         gfortran \
         git patch subversion \
         groff \
+        jpeg-dev \
         jq \
         libffi-dev \
         libtool \
         markdown \
         nodejs \
+        openblas lapack openblas-dev lapack-dev \
         openjdk11-jre \
         pcre2 pcre2-dev \
         pkgconf \
-        python3 \
+        python3 python3-dev py3-pip py3-wheel \
         R \
         readline-dev \
         ruby \
