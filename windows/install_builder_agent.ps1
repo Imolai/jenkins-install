@@ -8,46 +8,36 @@ FROM jenkins/ssh-agent:latest-alpine-jdk8
 RUN apk update --no-cache \
     && apk upgrade --no-cache \
     && apk add --no-cache \
-	    curl \
-	    rsync \
-		file \
-		sed \
-		gawk \
-		zip \
-		bzip2 \
-		git \
-		subversion \
-		patch \
-		binutils \
-		libtool \
-		readline-dev \
-		zlib-dev \
-		bzip2-dev \
-		xz-dev \
-		pcre2 pcre2-dev \
-		curl-dev \
-		texinfo texlive texlive-luatex texlive-xetex \
-		libffi-dev \
-		bison \
-		pkgconf \
-		make \
-		cmake \
-		autoconf \
-		automake \
-		gcc \
-		gcc-objc \
-		g++ \
-		gfortran \
-		python3 \
-		ruby \
-		R \
-		nodejs \
-		openjdk11-jre \
-		groff \
-		markdown \
-		asciidoc \
-		jq \
-		sudo
+        asciidoc \
+        binutils autoconf automake cmake make bison \
+        bzip2 bzip2-dev \
+        file \
+        gawk \
+        gcc gcc-objc g++ \
+        gfortran \
+        git patch subversion \
+        groff \
+        jq \
+        libffi-dev \
+        libtool \
+        markdown \
+        nodejs \
+        openjdk11-jre \
+        pcre2 pcre2-dev \
+        pkgconf \
+        python3 \
+        R \
+        readline-dev \
+        ruby \
+        sed \
+        shadow \
+        sudo \
+        texinfo texlive texlive-luatex texlive-xetex \
+        xz-dev \
+        zip \
+        zlib-dev \
+        rsync \
+        curl curl-dev
 
 RUN rm /usr/glibc-compat/lib/ld-linux-x86-64.so.2 && /usr/glibc-compat/sbin/ldconfig
 
@@ -57,7 +47,8 @@ ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk \
 RUN sed -i '/export PATH=/d' /etc/profile
 RUN echo "export PATH=`${PATH}" >> /etc/profile
 
-RUN usermod -aG sudo jenkins
+RUN sed -i '/^# %wheel.*NOPASSWD:.*$/ s/^# //' /etc/sudoers
+RUN usermod -aG wheel jenkins
 
 "@ | Set-Content Dockerfile
 
